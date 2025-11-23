@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    background: #cee7f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: #f2e2a2;
+    padding: 40px;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.contact-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-wrapper {
+    width: 100%;
+}
+
+.contact-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.instagram {
+    background: #d62976;
+}
+
+.linkedin {
+    background: #0077b5;
+}
+
+.whatsapp {
+    background: #25d366;
+}
+
+.contact-box i {
+    font-size: 28px;
+}
+
+.contact-box:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}

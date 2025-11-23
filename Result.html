@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Result Management System</title>
+  <link rel="stylesheet" href="Result.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Student Result </h1>
+    <p>Enter a student's result details</p>
+
+    <section class="form-card">
+      <form id="studentForm" autocomplete="off">
+        <input type="hidden" id="studentId" />
+
+        <label for="name">
+          Name
+          <input id="name" name="name" type="text" required placeholder="Enter name" />
+        </label>
+
+        <label for="class">
+          Class
+          <input id="class" name="class" type="text" required placeholder="Enter class" />
+        </label>
+
+        <label for="rollNo">
+          Roll No
+          <input id="rollNo" name="rollNo" type="text" required placeholder="Enter roll number" />
+        </label>
+
+        <label for="schoolName">
+          School Name
+          <input id="schoolName" name="schoolName" type="text" required placeholder="Enter school name" />
+        </label>
+
+
+        <div id="resultsContainer">
+          <h3>Results</h3>
+          <div class="result-row">
+            <input placeholder="Subject" class="subject" required />
+            <input type="number" placeholder="Marks" class="marks" required min="0" max="100" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit">Save</button>
+          <button type="button" id="clearBtn">Clear</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

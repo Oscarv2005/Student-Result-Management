@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Home</title>
+</head>
+<body>
+    <header>
+    <div class="navbar">
+        <div class="logo"><a href="#">Result Card</a></div>
+
+        <ul class="links" id="navLinks">
+            <li><a href="#">Home</a></li>
+            <li><a href="Result.html">Result</a></li>
+            <li><a href="record.html">Records</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+        </ul>
+
+        <a href="Result.html" class="action_btn">GET Started</a>
+
+        <div class="toggle_btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+
+    <ul class="links dropdown" id="dropdownMenu">
+        <li><a href="#">Home</a></li>
+        <li><a href="Result.html">Result</a></li>
+        <li><a href="record.html">Records</a></li>
+        <li><a href="Contact.html">Contact</a></li>
+        <li><a href="#" class="action_btn">GET Started</a></li>
+    </ul>
+</header>
+
+    <h1>Welcome to our Result Managing Site</h1>
+    <p>Our system offers a digital way to manage academic results without errors.
+<br>Students can check their performance anytime with quick access.
+<br>Easy, secure, and efficient for schools and colleges.</p>
+   <div class="center-area">
+        <div class="btn-group">
+            <a href="download.html" class="btn-outline">Download Data</a>
+        </div>
+   </div>
+   <script>
+const btn = document.getElementById("menuBtn");
+const drop = document.getElementById("dropdownMenu");
+
+btn.addEventListener("click", () => {
+    drop.classList.toggle("show");
+});
+</script>
+
+</body>
+</html>

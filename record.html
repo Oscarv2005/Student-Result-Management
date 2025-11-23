@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Search Student Results</title>
+  <link rel="stylesheet" href="Result.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Search Results</h1>
+    <p>Find saved student records</p>
+
+    <section class="form-card">
+      <form id="searchForm" autocomplete="off">
+        <label for="qName">Name
+          <input id="qName" name="qName" type="search" placeholder="Enter name" />
+        </label>
+
+        <label for="qClass">Class
+          <input id="qClass" name="qClass" type="search" placeholder="Enter class" />
+        </label>
+
+        <label for="qRoll">Roll No
+          <input id="qRoll" name="qRoll" type="search" placeholder="Enter roll number" />
+        </label>
+
+        <label for="qSchool">School Name
+          <input id="qSchool" name="qSchool" type="search" placeholder="Enter school name" />
+        </label>
+
+        <div class="form-actions">
+          <button id="searchBtn" type="submit">Search</button>
+          <button id="resetBtn" type="button">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="resultsArea" class="list-card" style="display:none">
+      <h2>Search Results</h2>
+      <div id="resultsList"></div>
+    </section>
+
+    <section class="form-card" style="margin-top:8px">
+      <button id="showAllBtn" type="button">Show All Records</button>
+      <button id="clearAllBtn" type="button" style="margin-left:8px">Clear All Records</button>
+    </section>
+  </main>
+
+  <script src="record.js"></script>
+</body>
+</html>
