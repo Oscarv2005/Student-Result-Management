@@ -9,12 +9,14 @@ body {
     height: 100vh;
     margin: 0;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     background: url("ChatGPT Image Nov 17, 2025, 08_04_22 PM.png");
     background-size: cover;
     background-position: center;
     padding-bottom: 10px;
 }
+
 
 body::before {
     content: "";
@@ -174,3 +176,4 @@ header{
     display: none;
   }
 }
+
