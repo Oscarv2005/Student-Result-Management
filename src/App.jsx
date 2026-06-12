@@ -4,7 +4,7 @@ import Navbar from "./nav";
 import Home from "./hero";
 import Result from "./Result";
 import Report from "./Report";
-import Login from "./Login";
+import Login from "./login";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
