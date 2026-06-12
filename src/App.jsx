@@ -89,7 +89,7 @@ function App() {
           }}
         >
           <button className="clear-button" onClick={handleLogout}>
-            Terminate Admin Session
+            Log Out
           </button>
         </div>
       )}
