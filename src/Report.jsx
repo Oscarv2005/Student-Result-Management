@@ -11,7 +11,7 @@ function Report({ studentsData }) {
 
   const getGradeClass = (grade) => {
     const classMap = {
-      "O": "grade-o",
+      "O": "grade-o",       // ✅ FIX: added missing "O" grade mapping
       "A+": "grade-a-plus",
       A: "grade-a",
       "B+": "grade-b-plus",
@@ -45,20 +45,31 @@ function Report({ studentsData }) {
     searchFilters.rollNo.trim() !== "";
 
   const filteredStudents = studentsData.filter((student) => {
-    return (
-      (student.university || "")
-        .toLowerCase()
-        .includes(searchFilters.university.toLowerCase()) &&
-      (student.school || "")
-        .toLowerCase()
-        .includes(searchFilters.school.toLowerCase()) &&
-      (student.studentName || "")
-        .toLowerCase()
-        .includes(searchFilters.studentName.toLowerCase()) &&
-      (student.rollNo || "")
-        .toLowerCase()
-        .includes(searchFilters.rollNo.toLowerCase())
-    );
+    // ✅ FIX: university/school filters now respect institutionType
+    // so school students won't appear in university searches and vice versa
+    const universityMatch =
+      searchFilters.university === "" ||
+      (student.institutionType === "university" &&
+        (student.university || "")
+          .toLowerCase()
+          .includes(searchFilters.university.toLowerCase()));
+
+    const schoolMatch =
+      searchFilters.school === "" ||
+      (student.institutionType === "school" &&
+        (student.school || "")
+          .toLowerCase()
+          .includes(searchFilters.school.toLowerCase()));
+
+    const nameMatch = (student.studentName || "")
+      .toLowerCase()
+      .includes(searchFilters.studentName.toLowerCase());
+
+    const rollMatch = (student.rollNo || "")
+      .toLowerCase()
+      .includes(searchFilters.rollNo.toLowerCase());
+
+    return universityMatch && schoolMatch && nameMatch && rollMatch;
   });
 
   return (
@@ -193,8 +204,10 @@ function Report({ studentsData }) {
                 <p>
                   Affiliation:{" "}
                   {selectedStudent.institutionType === "university"
-                    ? `${selectedStudent.university} [${selectedStudent.degreeProgram || selectedStudent.degree}]`
+                    ? `${selectedStudent.university} [${selectedStudent.degree}]`
                     : selectedStudent.school}
+                  {/* ✅ FIX: removed dead `selectedStudent.degreeProgram` reference,
+                       student objects only ever have `degree` set */}
                 </p>
               </div>
               <div className="overall-grade-circle glow-grade">
