@@ -30,6 +30,7 @@ function Result({ onAddStudent }) {
 
   const getGradeClass = (grade) => {
     const classMap = {
+      "O": "grade-o",       // ✅ FIX: was missing, caused 90+ scores to show as grade-f
       "A+": "grade-a-plus",
       A: "grade-a",
       "B+": "grade-b-plus",
@@ -139,7 +140,7 @@ function Result({ onAddStudent }) {
       rollNo: formData.rollNo,
       university: formData.university,
       school: formData.school,
-      degree: formData.degree,
+      degree: formData.degree,           // ✅ only "degree" is set (no degreeProgram)
       subjects: subjectDetails,
       averageMarks: averageMarks.toFixed(2),
       overallGrade,
