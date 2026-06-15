@@ -6,6 +6,11 @@ import Result from "./Result";
 import Report from "./Report";
 import Login from "./login";
 
+// ✅ FIX: Use environment variable for API base URL.
+// In local dev:  set VITE_API_URL=http://localhost:5000 in your .env file
+// On Vercel:     set VITE_API_URL=https://your-backend.onrender.com in project settings
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
@@ -21,7 +26,8 @@ function App() {
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    fetch("http://localhost:5000/api/students")
+    // ✅ FIX: was "http://localhost:5000/api/students" — broken on Vercel
+    fetch(`${API_BASE}/api/students`)
       .then((res) => res.json())
       .then((data) => setStudentsData(data))
       .catch((err) => console.error("Database connection fault:", err));
@@ -40,7 +46,8 @@ function App() {
 
   const handleAddStudent = async (studentData) => {
     try {
-      const response = await fetch("http://localhost:5000/api/students", {
+      // ✅ FIX: was "http://localhost:5000/api/students" — broken on Vercel
+      const response = await fetch(`${API_BASE}/api/students`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(studentData),
