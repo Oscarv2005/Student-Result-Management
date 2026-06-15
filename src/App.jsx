@@ -6,9 +6,6 @@ import Result from "./Result";
 import Report from "./Report";
 import Login from "./login";
 
-// ✅ FIX: Use environment variable for API base URL.
-// In local dev:  set VITE_API_URL=http://localhost:5000 in your .env file
-// On Vercel:     set VITE_API_URL=https://your-backend.onrender.com in project settings
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function App() {
@@ -26,8 +23,6 @@ function App() {
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    // ✅ FIX: was "http://localhost:5000/api/students" — broken on Vercel
-    // ✅ FIX: send JWT token so the protected route accepts the request
     const token = localStorage.getItem("rms_session_token");
     fetch(`${API_BASE}/api/students`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -50,7 +45,6 @@ function App() {
 
   const handleAddStudent = async (studentData) => {
     try {
-      // ✅ FIX: send JWT token so the protected route accepts the request
       const token = localStorage.getItem("rms_session_token");
       const response = await fetch(`${API_BASE}/api/students`, {
         method: "POST",
@@ -60,7 +54,6 @@ function App() {
         },
         body: JSON.stringify(studentData),
       });
-      // ✅ FIX: handle 401 (expired session) by logging the user out
       if (response.status === 401) {
         handleLogout();
         return;
