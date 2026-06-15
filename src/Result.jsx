@@ -30,7 +30,7 @@ function Result({ onAddStudent }) {
 
   const getGradeClass = (grade) => {
     const classMap = {
-      "O": "grade-o",       // ✅ FIX: was missing, caused 90+ scores to show as grade-f
+      "O": "grade-o",
       "A+": "grade-a-plus",
       A: "grade-a",
       "B+": "grade-b-plus",
@@ -115,7 +115,6 @@ function Result({ onAddStudent }) {
         return;
       }
       const marks = parseFloat(subjectMarks[subject]);
-      // ✅ FIX: isNaN check prevents empty/invalid values slipping through
       if (isNaN(marks) || marks < 0 || marks > 100) {
         setAlert({
           type: "error",
@@ -141,7 +140,7 @@ function Result({ onAddStudent }) {
       rollNo: formData.rollNo,
       university: formData.university,
       school: formData.school,
-      degree: formData.degree,           // ✅ only "degree" is set (no degreeProgram)
+      degree: formData.degree,
       subjects: subjectDetails,
       averageMarks: averageMarks.toFixed(2),
       overallGrade,
