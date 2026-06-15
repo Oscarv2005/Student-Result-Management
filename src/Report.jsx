@@ -11,7 +11,7 @@ function Report({ studentsData }) {
 
   const getGradeClass = (grade) => {
     const classMap = {
-      "O": "grade-o",       // ✅ FIX: added missing "O" grade mapping
+      "O": "grade-o",
       "A+": "grade-a-plus",
       A: "grade-a",
       "B+": "grade-b-plus",
@@ -45,8 +45,6 @@ function Report({ studentsData }) {
     searchFilters.rollNo.trim() !== "";
 
   const filteredStudents = studentsData.filter((student) => {
-    // ✅ FIX: university/school filters now respect institutionType
-    // so school students won't appear in university searches and vice versa
     const universityMatch =
       searchFilters.university === "" ||
       (student.institutionType === "university" &&
@@ -206,8 +204,6 @@ function Report({ studentsData }) {
                   {selectedStudent.institutionType === "university"
                     ? `${selectedStudent.university} [${selectedStudent.degree}]`
                     : selectedStudent.school}
-                  {/* ✅ FIX: removed dead `selectedStudent.degreeProgram` reference,
-                       student objects only ever have `degree` set */}
                 </p>
               </div>
               <div className="overall-grade-circle glow-grade">
