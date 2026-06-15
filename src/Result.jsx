@@ -115,7 +115,8 @@ function Result({ onAddStudent }) {
         return;
       }
       const marks = parseFloat(subjectMarks[subject]);
-      if (marks < 0 || marks > 100) {
+      // ✅ FIX: isNaN check prevents empty/invalid values slipping through
+      if (isNaN(marks) || marks < 0 || marks > 100) {
         setAlert({
           type: "error",
           message: `Invalid values. ${subject} score must fall inside 0-100.`,
