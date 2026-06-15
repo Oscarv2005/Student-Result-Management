@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function Login({ onAuthSuccess }) {
   const [isRegistering, setIsRegistering] = useState(false);
   const [credentials, setCredentials] = useState({ username: "", password: "" });
@@ -21,7 +23,7 @@ function Login({ onAuthSuccess }) {
     const actionType = forceAction || (isRegistering ? "register" : "login");
 
     try {
-      const response = await fetch(`https://stude-back.vercel.app/api/auth/${actionType}`, {
+      const response = await fetch(`${API_BASE}/api/auth/${actionType}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
@@ -32,7 +34,7 @@ function Login({ onAuthSuccess }) {
         if (actionType === "register") {
           setAlert({ type: "success", message: "Registration successful! Proceeding to log you in..." });
           try {
-            const loginRes = await fetch("https://stude-back.vercel.app/api/auth/login", {
+            const loginRes = await fetch(`${API_BASE}/api/auth/login`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(credentials),
