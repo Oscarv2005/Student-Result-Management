@@ -6,7 +6,7 @@ import Result from "./Result";
 import Report from "./Report";
 import Login from "./login";
 
-const API_BASE = "https://stude-back-ja3p.vercel.app";
+const API_BASE = "https://stude-back-sigma.vercel.app";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
