@@ -6,7 +6,7 @@ import Result from "./Result";
 import Report from "./Report";
 import Login from "./login";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = "https://stude-back-ja3p.vercel.app";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
