@@ -18,12 +18,13 @@ function Result({ onAddStudent }) {
 
   const getGrade = (marks) => {
     const marksNum = parseFloat(marks);
-    if (marksNum >= 90) return "A+";
-    if (marksNum >= 85) return "A";
-    if (marksNum >= 80) return "B+";
-    if (marksNum >= 75) return "B";
-    if (marksNum >= 70) return "C";
-    if (marksNum >= 60) return "D";
+    if (marksNum >= 90) return "O";
+    if (marksNum >= 80) return "A+";
+    if (marksNum >= 70) return "A";
+    if (marksNum >= 60) return "B+";
+    if (marksNum >= 50) return "B";
+    if (marksNum >= 45) return "C";
+    if (marksNum >= 40) return "D";
     return "F";
   };
 
