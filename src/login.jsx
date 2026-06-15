@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_BASE = "https://stude-back-ja3p.vercel.app";
+const API_BASE = "https://stude-back-sigma.vercel.app";
 
 function Login({ onAuthSuccess }) {
   const [isRegistering, setIsRegistering] = useState(false);
