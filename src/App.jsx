@@ -27,7 +27,11 @@ function App() {
     if (!isAuthenticated) return;
 
     // ✅ FIX: was "http://localhost:5000/api/students" — broken on Vercel
-    fetch(`${API_BASE}/api/students`)
+    // ✅ FIX: send JWT token so the protected route accepts the request
+    const token = localStorage.getItem("rms_session_token");
+    fetch(`${API_BASE}/api/students`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => res.json())
       .then((data) => setStudentsData(data))
       .catch((err) => console.error("Database connection fault:", err));
@@ -46,12 +50,21 @@ function App() {
 
   const handleAddStudent = async (studentData) => {
     try {
-      // ✅ FIX: was "http://localhost:5000/api/students" — broken on Vercel
+      // ✅ FIX: send JWT token so the protected route accepts the request
+      const token = localStorage.getItem("rms_session_token");
       const response = await fetch(`${API_BASE}/api/students`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(studentData),
       });
+      // ✅ FIX: handle 401 (expired session) by logging the user out
+      if (response.status === 401) {
+        handleLogout();
+        return;
+      }
       const result = await response.json();
       if (result.success) {
         setStudentsData((prev) => [...prev, result.data]);
