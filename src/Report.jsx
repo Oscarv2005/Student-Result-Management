@@ -11,6 +11,7 @@ function Report({ studentsData }) {
 
   const getGradeClass = (grade) => {
     const classMap = {
+      "O": "grade-o",
       "A+": "grade-a-plus",
       A: "grade-a",
       "B+": "grade-b-plus",
