@@ -6,8 +6,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Result = require("./models/Result");
 
-if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
-  console.error("MONGO_URI and JWT_SECRET must be set in .env");
+const missingEnv = ["MONGO_URI", "JWT_SECRET"].filter((k) => !process.env[k]);
+if (missingEnv.length && require.main === module) {
+  console.error(`Missing env vars: ${missingEnv.join(", ")}`);
   process.exit(1);
 }
 
@@ -31,6 +32,10 @@ function connectDB() {
 }
 
 app.use(async (req, res, next) => {
+  if (missingEnv.length)
+    return res
+      .status(500)
+      .json({ error: `Missing environment variables: ${missingEnv.join(", ")}` });
   try {
     await connectDB();
     next();
@@ -40,17 +45,15 @@ app.use(async (req, res, next) => {
   }
 });
 
-
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true, minlength: 6, select: false },
     role: { type: String, enum: ["student", "teacher", "admin"], default: "student" },
-    // Students only
     rollno: { type: String, trim: true },
     institution: { type: String, trim: true },
-    batch: { type: String, trim: true }, 
+    batch: { type: String, trim: true },
   },
   { timestamps: true }
 );
@@ -76,12 +79,10 @@ userSchema.methods.toPublic = function () {
   };
 };
 
-const User = mongoose.model("User", userSchema);
-
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 const sign = (user) =>
   jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-
 
 const protect = async (req, res, next) => {
   try {
@@ -103,12 +104,10 @@ const allow = (...roles) => (req, res, next) =>
     ? next()
     : res.status(403).json({ error: "You do not have access to this" });
 
-const exact = { locale: "en", strength: 2 }; // case-insensitive matching
+const exact = { locale: "en", strength: 2 };
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-
 app.get("/", (req, res) => res.send("Report Manager API"));
-
 
 app.post("/api/auth/register", async (req, res) => {
   try {
@@ -219,7 +218,6 @@ app.post("/api/results", protect, allow("teacher", "admin"), async (req, res) =>
       institution: institution.trim(),
     }).collation(exact);
 
-    
     if (!result) {
       result = await Result.create({
         name,
@@ -232,7 +230,6 @@ app.post("/api/results", protect, allow("teacher", "admin"), async (req, res) =>
       return res.status(201).json(result);
     }
 
-    
     const isAdmin = req.user.role === "admin";
     const blocked = [];
     for (const s of incoming) {
@@ -268,7 +265,6 @@ app.post("/api/results", protect, allow("teacher", "admin"), async (req, res) =>
   }
 });
 
-
 app.get("/api/results/me", protect, allow("student"), async (req, res) => {
   try {
     const result = await Result.findOne({
@@ -282,7 +278,6 @@ app.get("/api/results/me", protect, allow("student"), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.get("/api/results/search", protect, allow("teacher", "admin"), async (req, res) => {
   try {
@@ -309,7 +304,6 @@ app.get("/api/results/search", protect, allow("teacher", "admin"), async (req, r
   }
 });
 
-
 app.get("/api/results", protect, allow("admin"), async (req, res) => {
   try {
     res.json(await Result.find().sort({ createdAt: -1 }));
@@ -317,7 +311,6 @@ app.get("/api/results", protect, allow("admin"), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.delete("/api/results/:id", protect, allow("admin"), async (req, res) => {
   try {
@@ -375,7 +368,6 @@ app.delete("/api/users/:id", protect, allow("admin"), async (req, res) => {
 });
 
 app.use((req, res) => res.status(404).json({ error: "Route not found" }));
-
 
 async function seedAdmin() {
   const { ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME } = process.env;
