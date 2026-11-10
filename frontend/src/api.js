@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 export const API =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? "/api" : "http://localhost:3000/api");
+  (import.meta.env.PROD ? "/api" : "https://student-result-management-of6h.vercel.app/api");
 export const TOKEN_KEY = "rm_token";
 
 export const AuthContext = createContext(null);
